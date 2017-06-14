@@ -20,7 +20,7 @@ def TVGL(data, lengthOfSlice, lamb, beta, indexOfPenalty, eps = 3e-3, epsAbs = 1
 
     numberOfTotalSamples = data.shape[0]
     timestamps = int(numberOfTotalSamples/lengthOfSlice)    
-    
+    size = data.shape[1]
     # Generate empirical covariance matrices
     sampleSet = []    # list of array
     k = 0
@@ -46,7 +46,7 @@ def TVGL(data, lengthOfSlice, lamb, beta, indexOfPenalty, eps = 3e-3, epsAbs = 1
     gvx = TGraphVX()   
     for i in range(timestamps):
         n_id = i
-        S = semidefinite(size,name='S')
+        S = semidefinite(size, name='S')
         obj = -log_det(S) + trace(empCov*S) #+ alpha*norm(S,1)
         gvx.AddNode(n_id, obj)
         
