@@ -1,21 +1,19 @@
- 
 import numpy as np
 import numpy.linalg as alg
 
-def TVGL(data, lengthOfSlice, lamb, beta, indexOfPenalty, eps = 3e-3, epsAbs = 1e-3, epsRel = 1e-3):    
-    
+def TVGL(data, lengthOfSlice, lamb, beta, indexOfPenalty, eps = 3e-3, epsAbs = 1e-3, epsRel = 1e-3):        
     if indexOfPenalty == 1:
         print 'Use l-1 penalty function'
-        from inferGraph1 import *
+        from inferGraphL1 import *
     elif indexOfPenalty == 2:
         print 'Use l-2 penalty function'
-        from inferGraph2 import *
+        from inferGraphL2 import *
     elif indexOfPenalty == 3:
         print 'Use laplacian penalty function'
-        from inferGraph3 import *
+        from inferGraphL3 import *
     elif indexOfPenalty == 4:
         print 'Use l-inf penalty function'
-        from inferGraphInf import *
+        from inferGraphLinf import *
     else:
         print 'Use perturbation node penalty function'
         from inferGraphPN import *
@@ -75,9 +73,7 @@ def TVGL(data, lengthOfSlice, lamb, beta, indexOfPenalty, eps = 3e-3, epsAbs = 1
 #        val = gvx.GetNodeValue(nodeID,'S')
 #        thetaEst = upper2Full(val, eps)
 #        thetaSet.append(thetaEst)
-
     return thetaSet
-
 
 def GenEmpCov(samples, useKnownMean = False, m = 0):
     # samples should be array
@@ -108,5 +104,5 @@ data = np.random.multivariate_normal(np.zeros(2), Cov, 10)
 lamb = 3
 beta = 4
 lengthOfSlice = 1
-thetaSet = TVGL(data, lengthOfSlice, lamb, beta, indexOfPenalty = 5)
+thetaSet = TVGL(data, lengthOfSlice, lamb, beta, indexOfPenalty = 1)
 print thetaSet
