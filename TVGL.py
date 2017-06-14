@@ -34,7 +34,7 @@ def TVGL(data, lengthOfSlice, lamb, beta, indexOfPenalty, eps = 3e-3, epsAbs = 1
         k = k_next
         sampleSet.append(samples)        
         
-        empCov = GenEmpCov(sampleSet[i])
+        empCov = GenEmpCov(sampleSet[i].T)
         empCovSet.append(empCov)
     
     # delete: for checking
@@ -71,7 +71,7 @@ def TVGL(data, lengthOfSlice, lamb, beta, indexOfPenalty, eps = 3e-3, epsAbs = 1
     thetaSet = []
     for nodeID in range(timestamps):
         val = gvx.GetNodeValue(nodeID,'S')
-        thetaEst = upper2Full(val, eps)
+        thetaEst = upper2FullTVGL(val, eps)
         thetaSet.append(thetaEst)
     return thetaSet
 
@@ -87,7 +87,7 @@ def GenEmpCov(samples, useKnownMean = False, m = 0):
     empCov = empCov/samplesPerStep
     return empCov
     
-def upper2Full(a, eps = 0):
+def upper2FullTVGL(a, eps = 0):
     # a should be array
     ind = (a < eps) & (a > -eps)
     a[ind] = 0
