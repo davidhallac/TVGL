@@ -47,7 +47,7 @@ def TVGL(data, lengthOfSlice, lamb, beta, indexOfPenalty, eps = 3e-3, epsAbs = 1
     for i in range(timestamps):
         n_id = i
         S = semidefinite(size, name='S')
-        obj = -log_det(S) + trace(empCov*S) #+ alpha*norm(S,1)
+        obj = -log_det(S) + trace(empCovSet[i] * S) #+ alpha*norm(S,1)
         gvx.AddNode(n_id, obj)
         
         if (i > 0): #Add edge to previous timestamp
@@ -69,10 +69,10 @@ def TVGL(data, lengthOfSlice, lamb, beta, indexOfPenalty, eps = 3e-3, epsAbs = 1
     
     # Extract the set of estimated theta 
     thetaSet = []
-#    for nodeID in range(timestamps):
-#        val = gvx.GetNodeValue(nodeID,'S')
-#        thetaEst = upper2Full(val, eps)
-#        thetaSet.append(thetaEst)
+    for nodeID in range(timestamps):
+        val = gvx.GetNodeValue(nodeID,'S')
+        thetaEst = upper2Full(val, eps)
+        thetaSet.append(thetaEst)
     return thetaSet
 
 def GenEmpCov(samples, useKnownMean = False, m = 0):
@@ -89,7 +89,7 @@ def GenEmpCov(samples, useKnownMean = False, m = 0):
     
 def upper2Full(a, eps = 0):
     # a should be array
-    ind = (a<eps)&(a>-eps)
+    ind = (a < eps) & (a > -eps)
     a[ind] = 0
     n = int((-1  + np.sqrt(1+ 8*a.shape[0]))/2)  
     A = np.zeros([n,n])
