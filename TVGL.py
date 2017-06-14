@@ -63,9 +63,9 @@ def TVGL(data, lengthOfSlice, lamb, beta, indexOfPenalty, eps = 3e-3, epsAbs = 1
             
     # need to write the parameters of ADMM
 #    gvx.Solve()
-    gvx.Solve(EpsAbs=epsAbs, EpsRel=epsRel)
+#    gvx.Solve(EpsAbs=epsAbs, EpsRel=epsRel)
 #    gvx.Solve(MaxIters = 700, Verbose = True, EpsAbs=eps_abs, EpsRel=eps_rel)
-    #gvx.Solve( NumProcessors = 1, MaxIters = 3)
+    gvx.Solve( NumProcessors = 1, MaxIters = 3)
     
     # Extract the set of estimated theta 
     thetaSet = []
