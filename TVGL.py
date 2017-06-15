@@ -1,7 +1,7 @@
 import numpy as np
 import numpy.linalg as alg
 
-def TVGL(data, lengthOfSlice, lamb, beta, indexOfPenalty, eps = 3e-3, epsAbs = 1e-3, epsRel = 1e-3):        
+def TVGL(data, lengthOfSlice, lamb, beta, indexOfPenalty, verbose = False, eps = 3e-3, epsAbs = 1e-3, epsRel = 1e-3):        
     if indexOfPenalty == 1:
         print 'Use l-1 penalty function'
         from inferGraphL1 import *
@@ -10,7 +10,7 @@ def TVGL(data, lengthOfSlice, lamb, beta, indexOfPenalty, eps = 3e-3, epsAbs = 1
         from inferGraphL2 import *
     elif indexOfPenalty == 3:
         print 'Use laplacian penalty function'
-        from inferGraphL3 import *
+        from inferGraphLaplacian import *
     elif indexOfPenalty == 4:
         print 'Use l-inf penalty function'
         from inferGraphLinf import *
@@ -63,9 +63,9 @@ def TVGL(data, lengthOfSlice, lamb, beta, indexOfPenalty, eps = 3e-3, epsAbs = 1
             
     # need to write the parameters of ADMM
 #    gvx.Solve()
-#    gvx.Solve(EpsAbs=epsAbs, EpsRel=epsRel)
-#    gvx.Solve(MaxIters = 700, Verbose = True, EpsAbs=eps_abs, EpsRel=eps_rel)
-    gvx.Solve( NumProcessors = 1, MaxIters = 3)
+    gvx.Solve(EpsAbs=epsAbs, EpsRel=epsRel, Verbose = verbose)
+   # gvx.Solve(MaxIters = 700, Verbose = True, EpsAbs=eps_abs, EpsRel=eps_rel)
+    # gvx.Solve( NumProcessors = 1, MaxIters = 3)
     
     # Extract the set of estimated theta 
     thetaSet = []
@@ -98,11 +98,3 @@ def upper2FullTVGL(a, eps = 0):
     A = np.asarray((A + A.T) - np.diag(d))             
     return A   
 
-
-Cov = np.array([[5, 1], [1, 7]])
-data = np.random.multivariate_normal(np.zeros(2), Cov, 10)
-lamb = 3
-beta = 4
-lengthOfSlice = 1
-thetaSet = TVGL(data, lengthOfSlice, lamb, beta, indexOfPenalty = 1)
-print thetaSet
