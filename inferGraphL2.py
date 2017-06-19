@@ -1120,7 +1120,7 @@ def ADMM_x(entry):
         numpymat = cvxpyMat.value
         n_t=1 # Assume number of samples is 1 at each node, need to be alterned alter
         # Iterate through all neighbors of the node
-        mat_shape = (numpymat.shape[1] *  ( numpymat.shape[1]+1 )/2.0 ,)
+        mat_shape = (int(numpymat.shape[1] * ( numpymat.shape[1]+1 )/2.0),)
         a = numpy.zeros(mat_shape) 
 #        print 'degree = ', entry[X_DEG]
         for i in xrange(entry[X_DEG]):  # entry[X_DEG] = 3 if the node is neither first and the last one    
