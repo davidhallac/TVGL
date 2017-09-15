@@ -38,8 +38,8 @@ timeShift = int(np.ceil(float(timesteps)/numberOfCov)) #Number of steps till new
 eps = 3e-3
 
 
-eps_abs = 1e-2#1e-4
-eps_rel = 1e-2#1e-4
+eps_abs = 1e-4#1e-4
+eps_rel = 1e-4#1e-4
 
 
 
